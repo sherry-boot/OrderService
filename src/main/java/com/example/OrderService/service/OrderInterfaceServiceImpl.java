@@ -40,20 +40,27 @@ public class OrderInterfaceServiceImpl implements  OrderInterfaceService {
 
         List<OrderItems> orderItemsList = new ArrayList<>();
         //order dto -> orderId, userId.
-      Order order =  OrderMapper.toEntity(orderRequestDTO);
       List<OrderItems> orderItems = OrderItemMapper.toListOfOrderItems(orderRequestDTO.getOrderItems());
      // orderRepository.save(order);
+        Order order =  OrderMapper.toEntity(orderRequestDTO) ;
+        Double OrderTotalPrice = 0.0;
         for(OrderItems orderItem : orderItems ){
 
            ProductDTO product =  productServiceClient.findById(orderItem.getProductId());
            if(product!=null) {
                Double totalPrice = product.getPrice() * orderItem.getQuantity();
-               OrderItems orderItems1 = OrderItemMapper.toEntityFromList(orderItem, product.getId(), totalPrice, order);
+               OrderTotalPrice+=totalPrice;
+               OrderItems orderItems1 = OrderItemMapper.toEntityFromList(orderItem, product.getId(), totalPrice, product.getPrice(),order);
                orderItemsList.add(orderItems1);
+
+
            }
+
         }
-       order.setOrderItems(orderItemsList);
-       Order createdOrder=  orderRepository.save(order);
+
+        order.setOrderItems(orderItemsList);
+        order.setOrdertotalPrice(OrderTotalPrice);
+        Order createdOrder=  orderRepository.save(order);
         return OrderMapper.toCreateOrderRepsonse(createdOrder);
 
     }

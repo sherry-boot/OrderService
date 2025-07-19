@@ -24,6 +24,9 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name = "total_price")
+    private  Double OrdertotalPrice;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItems> orderItems;
 }
