@@ -1,6 +1,7 @@
 package com.example.OrderService.mapper;
 
 import com.example.OrderService.dto.OrderItemDTO;
+import com.example.OrderService.dto.ProductDTO;
 import com.example.OrderService.entity.Order;
 import com.example.OrderService.entity.OrderItems;
 
@@ -20,13 +21,15 @@ public class OrderItemMapper {
                 .collect(Collectors.toList());
     }
 
-    public static OrderItems toEntityFromList(OrderItems item, Long productId, Double totalPrice, Order order) {
+    public static OrderItems toEntityFromList(OrderItems item, Long productId, Double totalPrice, Double price, Order order) {
+
+        //        Double sumi = 0.0;
         return OrderItems.builder()
                 .userId(item.getUserId())
                 .quantity(item.getQuantity())
-                .pricePerUnit(item.getPricePerUnit())
+                .pricePerUnit(price)
                 .productId(productId)
-                .totalPrice(totalPrice)
+                .totalPrice(totalPrice).order(order)
                 .order(order)
                 .build();
     }

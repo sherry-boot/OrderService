@@ -13,4 +13,5 @@ public class OrderItemDTO {
     private Long quantity;
     private Double pricePerUnit;
     private  String userId;
+    private Double totalPrice;
 }
