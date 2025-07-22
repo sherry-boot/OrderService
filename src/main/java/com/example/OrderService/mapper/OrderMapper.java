@@ -25,7 +25,7 @@ public class OrderMapper {
         return OrderDTO.builder()
                 .orderId(order.getOrderId())
                 .userId(order.getUserId())
-                .status(OrderStatus.PENDING)
+                .status(OrderStatus.PENDING).totalPrice(order.getOrdertotalPrice())
                 .build();
     }
 
